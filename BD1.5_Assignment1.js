@@ -3,6 +3,8 @@ const cors = require('cors');
 const app = express();
 let PORT = 3000;
 
+app.use(cors());
+
 // server-side value
 let taxRate = 5 ;
 let discountPercenatge = 10 ;

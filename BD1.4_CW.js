@@ -98,7 +98,7 @@ app.get("/final-price",(req,res) => {
   let price = parseFloat(req.query.price);
   let discount = parseFloat(req.query.discount);
   let tax = parseFloat(req.query.tax);
-  res.send(getFinalPrice(price, discount, tax));
+  res.send(getFinalPrice(price, discount, tax).toString());
 })
 
 // total-exercise-time

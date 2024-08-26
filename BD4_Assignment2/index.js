@@ -57,6 +57,12 @@ async function fetchPlayerById(id){
   return { player : result } 
 }
 
+async function getPlayersByPlatform(platform){
+  let query = "SELECT * FROM players WHERE platform = ?";
+  let result = await db.all(query, [platform]);
+  return { players : result }
+}
+
 async function sortGPlayersByRating(){
   let query = "SELECT * FROM players ORDER BY rating DESC";
   let result = await db.all(query);
@@ -184,6 +190,20 @@ app.get("/players/details/:id", async (req, res) =>{
       return res.status(404).json({message: "No players found"});
     }
     return res.status(200).json(result);    
+  }catch(err){
+    res.status(500).json({message : err.message})
+  }
+})
+
+//players/platform/:platform
+app.get("/players/platform/:platform", async (req, res) =>{
+  let platform = req.params.platform;
+  try{
+    let result = await getPlayersByPlatform(platform);
+    if(result.players.length === 0){
+      return res.status(404).json({message: "No players found"});
+    }
+    return res.status(200).json(result);
   }catch(err){
     res.status(500).json({message : err.message})
   }
